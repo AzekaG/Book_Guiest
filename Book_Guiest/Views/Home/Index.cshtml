@@ -1,0 +1,116 @@
+﻿@model Book_Guiest.Models.Message
+@{
+    ViewData["Title"] = "Home Page";
+    
+}
+
+
+
+
+@if (Context.Session.GetString("FirstName") == null)
+{
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" asp-action="Index" asp-controller="Home"><img src="~/img/pngwing.com (2).png" /></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link disabled" asp-action="Index" asp-controller="Home">Главная</a>
+                <a class="nav-item nav-link active" asp-action="Login" asp-controller="Users">Вход</a>
+                <a class="nav-item nav-link active" asp-action="Registration" asp-controller="Users">Регистрация</a>
+            </div>
+        </div>
+    </nav>
+    <div class="messageBox" style="max-height:auto">
+        @foreach (Message el in ViewBag.Mes)
+        {
+
+
+
+            <div class="quote">
+                <p><span>@(el.msg)</span></p>
+            </div>
+            <div class="persona">
+                <div class="photo"><img class="img-circle img-thumbnail" src="https://bootstraptema.ru/snippets/icons/2016/mia/2.png" alt="" /></div>
+                <p>@(el.User.FirstName)  @(el.User.LastName)</p>
+                <p>@(el.date.ToString())</p>
+            </div>
+
+        }
+
+
+    </div>
+}
+else
+{
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" asp-action="Index" asp-controller="Home"><img src="~/img/pngwing.com (2).png" /></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+       
+
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link disabled" asp-action="Index" asp-controller="Home">Главная</a>
+                <a class="nav-item nav-link disabled">@Context.Session.GetString("FirstName") @Context.Session.GetString("LastName")</a>
+                <a class="nav-item nav-link active" asp-action="Logout" asp-controller="Home">Выйти</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="messageBox" style="max-height:70vh">
+        @foreach (Message el in ViewBag.Mes)
+    {
+        
+
+
+            <div class="quote">
+                <p><span>@(el.msg)</span></p>
+            </div>
+            <div class="persona">
+                <div class="photo"><img class="img-circle img-thumbnail" src="https://bootstraptema.ru/snippets/icons/2016/mia/2.png" alt="" /></div>
+                <p>@(el.User.FirstName)  @(el.User.LastName)</p>
+                <p>@(el.date.ToString())</p>
+            </div>
+
+    }
+        
+
+    </div>
+
+
+
+
+    <form asp-action="EnterMessage" asp-controller="Users">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="msg" class="control-label">Ваш отзыв</label>
+            <textarea asp-for="msg" class="form-control" placeholder="Введите отзыв"></textarea>
+            <span asp-validation-for="msg" class="text-danger"></span>
+          
+            <div class="form-group">
+                <input type="submit" value="Добавить" />
+            </div>
+        </div>
+    </form>
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+    
+   
+    
